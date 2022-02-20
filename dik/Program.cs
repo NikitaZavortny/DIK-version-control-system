@@ -21,10 +21,10 @@ namespace dik
         {
             switch (a[0])
             {
-                case "dik-help":
+                case "help":
                     CommandImpl.dikHelp();
                     break;
-                case "dik-commit":
+                case "commit":
                     if (a.Length < 2) 
                     {
                         Console.WriteLine("No path to folder!!!");
@@ -35,7 +35,7 @@ namespace dik
                     }
                     CommandImpl.dikCommit(a[1], a[2]);
                     break;
-                case "dik-delete":
+                case "delete":
                     break;
             }
 
@@ -48,8 +48,8 @@ namespace dik
         public static void dikHelp()
         {
             Console.WriteLine("Welcome to dik - a new version control system :)");
-            Console.WriteLine("dik-commit - make commit");
-            Console.WriteLine("dik-delete - delete all commits");
+            Console.WriteLine("commit  -<folder path> -<commit name>  - make commit");
+            Console.WriteLine("delete  -<folderpath>                  - delete all .dik files");
         }
 
         public static void dikCommit(string folderpath, string name)
@@ -63,5 +63,20 @@ namespace dik
                 Console.WriteLine(f);
             }
         }
+
+        //public static void DikDelete(string folderpath) 
+        //{
+        //    foreach (var i in Infrastructure.AllFiles(folderpath))
+        //    {
+        //        if
+        //        foreach (var s in Directory.GetDirectories(folderpath))
+        //        {
+        //            foreach (var d in Infrastructure.AllElementsInFolder(s))
+        //            {
+        //                elements.Add(d);
+        //            }
+        //        }
+        //    }
+        //}
     }
 }

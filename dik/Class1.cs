@@ -27,12 +27,12 @@ namespace dik
             foreach (var i in AllFiles(folderpath)) 
             {
                 elements.Add(new Element() { Name = i, Content = File.ReadAllText(i), Extent = Path.GetExtension(i) });
-                foreach (var s in Directory.GetDirectories(folderpath)) 
+            }
+            foreach (var s in Directory.GetDirectories(folderpath))
+            {
+                foreach (var d in AllElementsInFolder(s))
                 {
-                    foreach (var d in AllElementsInFolder(s)) 
-                    {
-                        elements.Add(d);
-                    }
+                    elements.Add(d);
                 }
             }
             return elements;

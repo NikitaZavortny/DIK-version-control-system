@@ -10,7 +10,6 @@ C:\Users\zavor\source\repos\dik\dik\obj\Debug\netcoreapp3.1\dik.GeneratedMSBuild
 C:\Users\zavor\source\repos\dik\dik\obj\Debug\netcoreapp3.1\dik.AssemblyInfoInputs.cache
 C:\Users\zavor\source\repos\dik\dik\obj\Debug\netcoreapp3.1\dik.AssemblyInfo.cs
 C:\Users\zavor\source\repos\dik\dik\obj\Debug\netcoreapp3.1\dik.csproj.CoreCompileInputs.cache
-C:\Users\zavor\source\repos\dik\dik\obj\Debug\netcoreapp3.1\dik.csproj.CopyComplete
 C:\Users\zavor\source\repos\dik\dik\obj\Debug\netcoreapp3.1\dik.dll
 C:\Users\zavor\source\repos\dik\dik\obj\Debug\netcoreapp3.1\dik.pdb
 C:\Users\zavor\source\repos\dik\dik\obj\Debug\netcoreapp3.1\dik.genruntimeconfig.cache
