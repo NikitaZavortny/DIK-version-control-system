@@ -1,0 +1,16 @@
+C:\Users\zavor\source\repos\dik\dik\bin\Debug\netcoreapp3.1\dik.exe
+C:\Users\zavor\source\repos\dik\dik\bin\Debug\netcoreapp3.1\dik.deps.json
+C:\Users\zavor\source\repos\dik\dik\bin\Debug\netcoreapp3.1\dik.runtimeconfig.json
+C:\Users\zavor\source\repos\dik\dik\bin\Debug\netcoreapp3.1\dik.runtimeconfig.dev.json
+C:\Users\zavor\source\repos\dik\dik\bin\Debug\netcoreapp3.1\dik.dll
+C:\Users\zavor\source\repos\dik\dik\bin\Debug\netcoreapp3.1\dik.pdb
+C:\Users\zavor\source\repos\dik\dik\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\zavor\source\repos\dik\dik\obj\Debug\netcoreapp3.1\dik.csproj.AssemblyReference.cache
+C:\Users\zavor\source\repos\dik\dik\obj\Debug\netcoreapp3.1\dik.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\zavor\source\repos\dik\dik\obj\Debug\netcoreapp3.1\dik.AssemblyInfoInputs.cache
+C:\Users\zavor\source\repos\dik\dik\obj\Debug\netcoreapp3.1\dik.AssemblyInfo.cs
+C:\Users\zavor\source\repos\dik\dik\obj\Debug\netcoreapp3.1\dik.csproj.CoreCompileInputs.cache
+C:\Users\zavor\source\repos\dik\dik\obj\Debug\netcoreapp3.1\dik.csproj.CopyComplete
+C:\Users\zavor\source\repos\dik\dik\obj\Debug\netcoreapp3.1\dik.dll
+C:\Users\zavor\source\repos\dik\dik\obj\Debug\netcoreapp3.1\dik.pdb
+C:\Users\zavor\source\repos\dik\dik\obj\Debug\netcoreapp3.1\dik.genruntimeconfig.cache
