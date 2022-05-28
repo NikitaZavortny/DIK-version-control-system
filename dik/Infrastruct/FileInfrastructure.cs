@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using dik.models;
 
-namespace dik
+namespace dik.Infrastruct
 {
-    class Infrastructure
+    class FileInfrastructure
     {
         public String FileText(string path)
         {
@@ -24,13 +24,17 @@ namespace dik
 
         public static Folder folder(string folderpath) 
         {
-            Folder f = new Folder();
+            Folder f = new Folder() { folders = new List<Folder>()};
             f.Name = folderpath.Split('\\').Last();
             foreach (var a in Directory.GetDirectories(folderpath)) 
             {
-                f.folders.Add(folder(a));
+                Console.WriteLine(a);
+                if (!(folder(a) == null))
+                {
+                    f.folders.Add(folder(a));
+                }
             }
-            return null;
+            return f;
         }
 
         public static List<Element> AllElementsInFolder(string folderpath, bool GetBranches)
@@ -40,7 +44,7 @@ namespace dik
             {
                 if (Path.GetExtension(i) != ".dik" || GetBranches == true)
                 {
-                    elements.Add(new Element() { Name = Path.GetFileName(i), Path = i, Content = File.ReadAllText(i), Extent = Path.GetExtension(i), f = folder(folderpath)});
+                    elements.Add(new Element() { Name = Path.GetFileName(i), Path = i.Remove(0, folderpath.Length), Content = File.ReadAllText(i), Extent = Path.GetExtension(i), f = folder(folderpath)});
                 }
             }
             foreach (var s in Directory.GetDirectories(folderpath))
@@ -54,6 +58,19 @@ namespace dik
                 }
             }
             return elements;
+        }
+
+        public static void ExtractFolders(Folder f, string startfpath) 
+        {
+            foreach (var i in f.folders)
+            {
+                Directory.CreateDirectory(startfpath + "\\" + i.Name);
+                Console.WriteLine(i.Name + " extracted to " + startfpath + "\\" + i.Name);
+                foreach (var a in i.folders)
+                {
+                    ExtractFolders(i, startfpath + "\\" + i.Name);
+                }
+            }
         }
     }
 }
