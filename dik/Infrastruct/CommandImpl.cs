@@ -37,7 +37,7 @@ namespace dik.Infrastruct
                 return;
             }
 
-            List<Element> v = FileInfrastructure.AllElementsInFolder(folderpath, false);
+            List<Element> v = FileInfrastructure.AllElementsInFolder(folderpath, folderpath, false);
 
             foreach (var l in FileInfrastructure.AllFiles(folderpath + @"\.dik"))
             {
@@ -55,40 +55,24 @@ namespace dik.Infrastruct
             }
         }
 
-        //public static void Extract(string filepath, string folderpath) 
-        //{
-        //    List<Element> elements = new List<Element>();
+        public static void Extract(string filepath, string folderpath)
+        {
+            if (!File.Exists(filepath))
+            {
+                Console.WriteLine("No such file path!!!");
+            }
+            if (!Directory.Exists(folderpath))
+            {
+                Console.WriteLine("No such directory path!!!");
+            }
 
-        //    if (!File.Exists(filepath)) 
-        //    {
-        //        Console.WriteLine("No such file path!!!");
-        //    }
-        //    if (!Directory.Exists(folderpath)) 
-        //    {
-        //        Console.WriteLine("No such directory path!!!");
-        //    }
+            List<Element> fileTree = JsonConvert.DeserializeObject<List<Element>>(File.ReadAllText(filepath));
 
-        //    //JArray jsonResponse = JArray.Parse(File.ReadAllText(filepath));
+            FileInfrastructure.ExtractFolders(fileTree[0].f, folderpath);
 
-        //    //foreach (var item in jsonResponse)
-        //    //{
-        //    //    JObject jRaces = (JObject)item[""];
-        //    //    foreach (var rItem in jRaces)
-        //    //    {
-        //    //        string rItemKey = rItem.Key;
-        //    //        JObject rItemValueJson = (JObject)rItem.Value;
-        //    //        elements.Add(item.Value<JObject>().ToObject<Element>());
-        //    //    }
-        //    //}
-        //    elements = JsonConvert.DeserializeObject<List<Element>>(File.ReadAllText(filepath));
-        //    foreach (var i in elements) 
-        //    {
-        //        Console.WriteLine(i);
-        //        Console.WriteLine(folderpath + @"\" + i.Name);
-        //        File.Create(folderpath +@"\"+ i.Name);
-        //        File.WriteAllText(folderpath + @"\" + i.Name, i.Content);
-        //    }
-        //}
+            FileInfrastructure.ExtractFiles(folderpath, fileTree);
+
+        }
 
         public static void DikDelete(string folderpath)
         {
@@ -103,7 +87,7 @@ namespace dik.Infrastruct
         public static void GetBranches(string folderpath)
         {
             bool u = true;
-            List<Element> a = FileInfrastructure.AllElementsInFolder(folderpath + @"\.dik", u);
+            List<Element> a = FileInfrastructure.AllElementsInFolder(folderpath + @"\.dik", folderpath + @"\.dik",  u);
             foreach (var i in a)
             {
                 if (i.Extent == ".dik")

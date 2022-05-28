@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using dik.models;
 
 namespace dik.Infrastruct
@@ -12,7 +13,7 @@ namespace dik.Infrastruct
         {
             if (path == null)
             {
-                throw new ArgumentNullException();
+                TextInfrastruct.WriteError("Path is wrong!!!");
             }
             return File.ReadAllText(path);
         }
@@ -37,19 +38,19 @@ namespace dik.Infrastruct
             return f;
         }
 
-        public static List<Element> AllElementsInFolder(string folderpath, bool GetBranches)
+        public static List<Element> AllElementsInFolder(string folderpath, string startpath, bool GetBranches)
         {
             List <Element> elements = new List<Element>();
             foreach (var i in AllFiles(folderpath)) 
             {
                 if (Path.GetExtension(i) != ".dik" || GetBranches == true)
                 {
-                    elements.Add(new Element() { Name = Path.GetFileName(i), Path = i.Remove(0, folderpath.Length), Content = File.ReadAllText(i), Extent = Path.GetExtension(i), f = folder(folderpath)});
+                    elements.Add(new Element() { Name = Path.GetFileName(i), Path = i.Remove(0, startpath.Length), Content = File.ReadAllText(i), Extent = Path.GetExtension(i), f = folder(folderpath)});
                 }
             }
             foreach (var s in Directory.GetDirectories(folderpath))
             {
-                foreach (var d in AllElementsInFolder(s, GetBranches))
+                foreach (var d in AllElementsInFolder(s, startpath, GetBranches))
                 {
                     if (Path.GetExtension(d.Name) != "dik")
                     {
@@ -62,15 +63,47 @@ namespace dik.Infrastruct
 
         public static void ExtractFolders(Folder f, string startfpath) 
         {
-            foreach (var i in f.folders)
+            TextInfrastruct.WriteSucess("Starting folder extraction:", "Start");
+            try 
             {
-                Directory.CreateDirectory(startfpath + "\\" + i.Name);
-                Console.WriteLine(i.Name + " extracted to " + startfpath + "\\" + i.Name);
-                foreach (var a in i.folders)
+                foreach (var i in f.folders)
                 {
-                    ExtractFolders(i, startfpath + "\\" + i.Name);
+                    Directory.CreateDirectory(startfpath + "\\" + i.Name);
+                    TextInfrastruct.WriteSucess("Extraction to " + startfpath + "\\" + i.Name, "Extracting");
+                    foreach (var a in i.folders)
+                    {
+                        ExtractFolders(i, startfpath + "\\" + i.Name);
+                    }
                 }
             }
+            catch (Exception e) 
+            {
+                TextInfrastruct.WriteError(e.Message);
+            }
+            
+        }
+
+        public static void ExtractFiles(string folderpath, List<Element> a)
+        {
+            TextInfrastruct.WriteSucess("Starting files extraction:", "Start");
+            try
+            {
+                foreach (var i in a)
+                {
+                    TextInfrastruct.WriteSucess("Extraction to " + folderpath + "\\" + i.Name, "Extracting");
+                    using (FileStream sw = File.Create(folderpath + i.Path))
+                    {
+                        byte[] info = new UTF8Encoding(true).GetBytes(i.Content);
+
+                        sw.Write(info, 0, info.Length);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                TextInfrastruct.WriteError(e.Message);
+            }
+
         }
     }
 }

@@ -13,8 +13,8 @@ namespace dik
     {
         static void Main(string[] args)
         {
-            //OperateCommands(new string[] { "newbranch", @"D:\Новаяпапка", "newstruct8" });
-            FileInfrastructure.ExtractFolders(JsonConvert.DeserializeObject<List<Element>>(File.ReadAllText(@"D:\Новаяпапка\.dik\newstruct8.dik"))[0].f, @"D:\extractF");
+            OperateCommands(new string[] { "extract", @"D:\Новаяпапка\.dik\newstruct8.dik", @"D:\extractF" });
+            //FileInfrastructure.ExtractFolders(JsonConvert.DeserializeObject<List<Element>>(File.ReadAllText(@"D:\Новаяпапка\.dik\newstruct8.dik"))[0].f, @"D:\extractF");
             //if (args.Length == 0)
             //{
             //    args[0] = "dik-help";
@@ -58,17 +58,18 @@ namespace dik
                     CommandImpl.DikDelete(a[1]);
                     break;
 
-                //case "extract":
-                //    if (a.Length < 2) 
-                //    {
-                //        Console.WriteLine("No path to file!!!");
-                //    }
-                //    if (a.Length < 3) 
-                //    {
-                //        Console.WriteLine("No path to folder of extraction!!!");
-                //    }
-                //    CommandImpl.Extract(a[1], a[2]);
-                //    break;
+                case "extract":
+                    if (a.Length < 2)
+                    {
+                        TextInfrastruct.WriteError("No path to file!!!");
+                    }
+                    if (a.Length < 3)
+                    {
+                        TextInfrastruct.WriteError("No path to folder of extraction!!!");
+                    }
+                    CommandImpl.Extract(a[1], a[2]);
+                    break;
+
                 case "getbranches":
                     if (a.Length < 1)
                     {
