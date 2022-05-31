@@ -15,8 +15,8 @@ namespace dik
     {
         static void Main(string[] args)
         {
-            //OperateCommands(new string[] { "newbranch", @"C:\Users\zavor\source\repos\clubLubePoshekotatOchko", "newstruct2" });
-            OperateCommands(new string[] { "extract", @"D:\Новаяпапка\.dik\newstruct8.dik", @"D:\extractF" });
+            OperateCommands(new string[] { "newbranch", @"D:\Новаяпапка", "newstruct2" });
+            OperateCommands(new string[] { "extract", @"D:\Новаяпапка\.dik\newstruct2.dik", @"D:\extractF" });
             //FileInfrastructure.ExtractFolders(JsonConvert.DeserializeObject<List<Element>>(File.ReadAllText(@"D:\Новаяпапка\.dik\newstruct8.dik"))[0].f, @"D:\extractF");
 
             //if (args.Length == 0)
@@ -28,81 +28,82 @@ namespace dik
 
         public static void OperateCommands(string[] a)
         {
-            ImmutableList<Command> c = ImmutableList.Create<Command>();
+            List<Command> c = new List<Command>();
             c.Add(new Delete());
             c.Add(new Extract());
             c.Add(new GetBranches());
             c.Add(new Help());
             c.Add(new newbranch());
 
-            foreach (var i in c) 
+            foreach (var i in c)
             {
                 if (a[0] == i.Name) 
                 {
                     i.Execute(a);
-                    break;
+                    return;
                 }
-                TextInfrastruct.WriteError("No such command");
+                
             }
+            TextInfrastruct.WriteError("No such command");
+            //switch (a[0])
+            //{
+            //    case "help":
+            //        CommandImpl.dikHelp();
+            //        break;
 
-            switch (a[0])
-            {
-                case "help":
-                    CommandImpl.dikHelp();
-                    break;
+            //    case "newbranch":
+            //        if (a.Length < 2)
+            //        {
+            //            TextInfrastruct.WriteError("No path to folder!!!");
+            //        }
+            //        if (a.Length < 3)
+            //        {
+            //            TextInfrastruct.WriteError("No name for branch!!!");
+            //        }
+            //        CommandImpl.dikbranch(a[1], a[2]);
+            //        break;
 
-                case "newbranch":
-                    if (a.Length < 2) 
-                    {
-                        TextInfrastruct.WriteError("No path to folder!!!");
-                    }
-                    if (a.Length < 3) 
-                    {
-                        TextInfrastruct.WriteError("No name for branch!!!");
-                    }
-                    CommandImpl.dikbranch(a[1], a[2]);
-                    break;
+            //    case "init":
+            //        if (a.Length < 2)
+            //        {
+            //            TextInfrastruct.WriteError("No path to folder!!!");
+            //        }
+            //        Directory.CreateDirectory(a[1] + @"\.dik");
+            //        break;
 
-                case "init":
-                    if (a.Length < 2) 
-                    {
-                        TextInfrastruct.WriteError("No path to folder!!!");
-                    }
-                    Directory.CreateDirectory(a[1]+@"\.dik");
-                    break;
+            //    case "delete":
+            //        if (a.Length < 1)
+            //        {
+            //            TextInfrastruct.WriteError("No path to folder!!!");
+            //        }
+            //        CommandImpl.DikDelete(a[1]);
+            //        break;
 
-                case "delete":
-                    if (a.Length < 1)
-                    {
-                        TextInfrastruct.WriteError("No path to folder!!!");
-                    }
-                    CommandImpl.DikDelete(a[1]);
-                    break;
+            //    case "extract":
+            //        if (a.Length < 2)
+            //        {
+            //            TextInfrastruct.WriteError("No path to file!!!");
+            //        }
+            //        if (a.Length < 3)
+            //        {
+            //            TextInfrastruct.WriteError("No path to folder of extraction!!!");
+            //        }
+            //        CommandImpl.Extract(a[1], a[2]);
+            //        break;
 
-                case "extract":
-                    if (a.Length < 2)
-                    {
-                        TextInfrastruct.WriteError("No path to file!!!");
-                    }
-                    if (a.Length < 3)
-                    {
-                        TextInfrastruct.WriteError("No path to folder of extraction!!!");
-                    }
-                    CommandImpl.Extract(a[1], a[2]);
-                    break;
+            //    case "getbranches":
+            //        if (a.Length < 1)
+            //        {
+            //            TextInfrastruct.WriteError("No path to folder!!!");
+            //        }
+            //        CommandImpl.GetBranches(a[1]);
+            //        break;
 
-                case "getbranches":
-                    if (a.Length < 1)
-                    {
-                        TextInfrastruct.WriteError("No path to folder!!!");
-                    }
-                    CommandImpl.GetBranches(a[1]);
-                    break;
+            //    default:
+            //        TextInfrastruct.WriteError("Unknown Command!!!");
+            //        break;
+            //}
 
-                default:
-                    TextInfrastruct.WriteError("Unknown Command!!!");
-                    break;
-            }
         }
     }
 }
