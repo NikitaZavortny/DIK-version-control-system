@@ -10,6 +10,5 @@ namespace dik.models
         public string Path { get; set; }
         public string Content { get; set; }
         public string Extent { get; set; }
-        public Folder f { get; set; }
     }
 }

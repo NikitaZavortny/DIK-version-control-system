@@ -1,4 +1,6 @@
 using NUnit.Framework;
+using dik.Infrastruct.CommandImplementations;
+
 namespace dikTest
 {
     public class Tests
@@ -6,6 +8,7 @@ namespace dikTest
         [SetUp]
         public void Setup()
         {
+
         }
 
         [Test]

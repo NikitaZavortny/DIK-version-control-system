@@ -29,7 +29,8 @@ namespace dik.Infrastruct
             f.Name = folderpath.Split('\\').Last();
             foreach (var a in Directory.GetDirectories(folderpath)) 
             {
-                Console.WriteLine(a);
+                
+                TextInfrastruct.WriteSucess(a, "Registring file:");
                 if (!(folder(a) == null))
                 {
                     f.folders.Add(folder(a));
@@ -38,6 +39,8 @@ namespace dik.Infrastruct
             return f;
         }
 
+
+
         public static List<Element> AllElementsInFolder(string folderpath, string startpath, bool GetBranches)
         {
             List <Element> elements = new List<Element>();
@@ -45,7 +48,7 @@ namespace dik.Infrastruct
             {
                 if (Path.GetExtension(i) != ".dik" || GetBranches == true)
                 {
-                    elements.Add(new Element() { Name = Path.GetFileName(i), Path = i.Remove(0, startpath.Length), Content = File.ReadAllText(i), Extent = Path.GetExtension(i), f = folder(folderpath)});
+                    elements.Add(new Element() { Name = Path.GetFileName(i), Path = i.Remove(0, startpath.Length), Content = File.ReadAllText(i), Extent = Path.GetExtension(i)});
                 }
             }
             foreach (var s in Directory.GetDirectories(folderpath))
@@ -61,15 +64,18 @@ namespace dik.Infrastruct
             return elements;
         }
 
+
+
+
         public static void ExtractFolders(Folder f, string startfpath) 
         {
-            TextInfrastruct.WriteSucess("Starting folder extraction:", "Start");
             try 
             {
                 foreach (var i in f.folders)
                 {
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Directory.CreateDirectory(startfpath + "\\" + i.Name);
-                    TextInfrastruct.WriteSucess("Extraction to " + startfpath + "\\" + i.Name, "Extracting");
+                    Console.WriteLine("     Extracting:" + "Extraction to " + startfpath + "\\" + i.Name);
                     foreach (var a in i.folders)
                     {
                         ExtractFolders(i, startfpath + "\\" + i.Name);
@@ -80,17 +86,17 @@ namespace dik.Infrastruct
             {
                 TextInfrastruct.WriteError(e.Message);
             }
-            
+            Console.ResetColor();
         }
 
         public static void ExtractFiles(string folderpath, List<Element> a)
         {
-            TextInfrastruct.WriteSucess("Starting files extraction:", "Start");
             try
             {
                 foreach (var i in a)
                 {
-                    TextInfrastruct.WriteSucess("Extraction to " + folderpath + "\\" + i.Name, "Extracting");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("     Extracting:" + "Extraction to " + folderpath + "\\" + i.Name);
                     using (FileStream sw = File.Create(folderpath + i.Path))
                     {
                         byte[] info = new UTF8Encoding(true).GetBytes(i.Content);
@@ -103,7 +109,7 @@ namespace dik.Infrastruct
             {
                 TextInfrastruct.WriteError(e.Message);
             }
-
+            Console.ResetColor();
         }
     }
 }

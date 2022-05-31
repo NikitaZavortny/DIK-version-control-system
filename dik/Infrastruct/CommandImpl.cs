@@ -37,6 +37,10 @@ namespace dik.Infrastruct
                 return;
             }
 
+            Console.WriteLine();
+            TextInfrastruct.WriteSucess("Starting file registration:", "Start");
+            Console.WriteLine();
+
             List<Element> v = FileInfrastructure.AllElementsInFolder(folderpath, folderpath, false);
 
             foreach (var l in FileInfrastructure.AllFiles(folderpath + @"\.dik"))
@@ -47,12 +51,24 @@ namespace dik.Infrastruct
                 }
             }
 
-            string s = JsonConvert.SerializeObject(v);
+
+            FileStruct q = new FileStruct();
+            q.elements = v;
+            q.f = FileInfrastructure.folder(folderpath);
+
+            string s = JsonConvert.SerializeObject(q);
             File.WriteAllText(folderpath + @"\.dik" + @"\" + name + ".dik", s);
+
+            Console.WriteLine();
+            TextInfrastruct.WriteSucess("Starting folders registration:", "Start");
+            Console.WriteLine();
+
+            Console.ForegroundColor = ConsoleColor.Green;
             foreach (var f in v)
             {
-                Console.WriteLine(f);
+                Console.WriteLine("     Registered file: " + folderpath + f.Path);
             }
+            Console.ResetColor();
         }
 
         public static void Extract(string filepath, string folderpath)
@@ -66,11 +82,15 @@ namespace dik.Infrastruct
                 Console.WriteLine("No such directory path!!!");
             }
 
-            List<Element> fileTree = JsonConvert.DeserializeObject<List<Element>>(File.ReadAllText(filepath));
+            FileStruct fileTree = JsonConvert.DeserializeObject<FileStruct>(File.ReadAllText(filepath));
 
-            FileInfrastructure.ExtractFolders(fileTree[0].f, folderpath);
+            TextInfrastruct.WriteSucess("Starting folder extraction:", "Start");
+            
+            FileInfrastructure.ExtractFolders(fileTree.f, folderpath);
 
-            FileInfrastructure.ExtractFiles(folderpath, fileTree);
+            TextInfrastruct.WriteSucess("Starting files extraction:", "Start");
+
+            FileInfrastructure.ExtractFiles(folderpath, fileTree.elements);
 
         }
 
@@ -92,6 +112,7 @@ namespace dik.Infrastruct
             {
                 if (i.Extent == ".dik")
                 {
+
                     Console.WriteLine(i.Name);
                 }
             }

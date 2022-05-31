@@ -4,8 +4,10 @@ using System.IO;
 using Newtonsoft.Json;
 using dik.models;
 using dik.Infrastruct;
+using dik.Infrastruct.CommandImplementations;
 using System.Text;
 using Newtonsoft.Json.Linq;
+using System.Collections.Immutable;
 
 namespace dik
 {
@@ -13,8 +15,10 @@ namespace dik
     {
         static void Main(string[] args)
         {
+            //OperateCommands(new string[] { "newbranch", @"C:\Users\zavor\source\repos\clubLubePoshekotatOchko", "newstruct2" });
             OperateCommands(new string[] { "extract", @"D:\Новаяпапка\.dik\newstruct8.dik", @"D:\extractF" });
             //FileInfrastructure.ExtractFolders(JsonConvert.DeserializeObject<List<Element>>(File.ReadAllText(@"D:\Новаяпапка\.dik\newstruct8.dik"))[0].f, @"D:\extractF");
+
             //if (args.Length == 0)
             //{
             //    args[0] = "dik-help";
@@ -24,6 +28,23 @@ namespace dik
 
         public static void OperateCommands(string[] a)
         {
+            ImmutableList<Command> c = ImmutableList.Create<Command>();
+            c.Add(new Delete());
+            c.Add(new Extract());
+            c.Add(new GetBranches());
+            c.Add(new Help());
+            c.Add(new newbranch());
+
+            foreach (var i in c) 
+            {
+                if (a[0] == i.Name) 
+                {
+                    i.Execute(a);
+                    break;
+                }
+                TextInfrastruct.WriteError("No such command");
+            }
+
             switch (a[0])
             {
                 case "help":
@@ -51,7 +72,7 @@ namespace dik
                     break;
 
                 case "delete":
-                    if (a.Length < 2)
+                    if (a.Length < 1)
                     {
                         TextInfrastruct.WriteError("No path to folder!!!");
                     }
